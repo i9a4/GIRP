@@ -1,0 +1,45 @@
+﻿<Window x:Class="WpfAppIpRange.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppIpRange"
+        mc:Ignorable="d"
+        
+        Title="GIRP" Height="574" Width="467" ResizeMode="CanMinimize">
+    <Grid>
+        <Label Content="GIPR" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.447,0.175" FontSize="22" Margin="0,10,0,0"/>
+        <Border BorderThickness="1" Margin="0,54,0,0" Height="130" VerticalAlignment="Top" HorizontalAlignment="Left" Width="467">
+            <TextBox Name="TB_GOROD" Style="{StaticResource placeHolder}" Tag="Введите город" TextWrapping="Wrap" Margin="45,9,45,0" FontSize="20" PreviewTextInput="TB_GOROD_PreviewTextInput" Height="32" MaxLines="1" TextAlignment="Center" VerticalAlignment="Top" TextChanged="TB_GOROD_TextChanged" PreviewKeyDown="TB_GOROD_PreviewKeyDown"/>
+        </Border>
+        <Button Name="BTN_SEARCH" Content="Поиск" Margin="100,148,251,0" FontSize="14" Height="25" VerticalAlignment="Top" Click="BTN_SEARCH_Click" HorizontalContentAlignment="Center" IsEnabled="False"/>
+        <Border BorderThickness="1" Margin="0,184,0,0">
+            <RichTextBox Name="TB_OUT" Margin="9,5,9,70" AutoWordSelection="False" IsReadOnly="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                <FlowDocument>
+                </FlowDocument>
+            </RichTextBox>
+        </Border>
+
+        <Button Name="BT_COPY" Content="Скопировать" Margin="19,0,329,19" Height="29" VerticalAlignment="Bottom" Click="BT_COPY_Click" IsEnabled="False"/>
+        <Button Name="BT_ABOUT" Content="О программе" Margin="174,0,174,19" Height="29" VerticalAlignment="Bottom" Click="BT_ABOUT_Click"/>
+        <Border BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="1" Margin="0,182,0,374" RenderTransformOrigin="0.5,0.5">
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Border.RenderTransform>
+        </Border>
+        <Button Name="BTN_Random" Content="Случайно" Margin="251,148,100,0" FontSize="14" Height="25" VerticalAlignment="Top" Click="BTN_Random_Click"/>
+        <TextBlock Margin="50,103,0,0" TextWrapping="Wrap" Text="TimeZone: " Height="16" VerticalAlignment="Top" HorizontalAlignment="Left" Width="59"/>
+        <TextBlock Name="TB_TIMEZONE" Margin="114,103,0,0" TextWrapping="Wrap" Text="-" Width="130" HorizontalAlignment="Left" Height="16" VerticalAlignment="Top"/>
+        <TextBlock Margin="50,119,0,0" TextWrapping="Wrap" Text="Найдено:" VerticalAlignment="Top" HorizontalAlignment="Left" Width="59"/>
+        <Button Name="TB_SAVE" Content="Сохранить" Margin="329,0,19,19" Height="29" VerticalAlignment="Bottom" Click="TB_SAVE_Click" IsEnabled="False"/>
+        <TextBlock Name="TB_FOUND" HorizontalAlignment="Left" Margin="114,119,0,0" TextWrapping="Wrap" Text="-" VerticalAlignment="Top" Width="130"></TextBlock>
+
+    </Grid>
+</Window>
+
+    

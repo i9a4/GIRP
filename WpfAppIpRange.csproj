@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <PackageIcon>girp_ico.png</PackageIcon>
+    <AssemblyName>GIRP</AssemblyName>
+    <RootNamespace>GIRP</RootNamespace>
+    <SignAssembly>False</SignAssembly>
+    <Company>Maxim D.</Company>
+    <Authors>Maxim D.</Authors>
+    <Version>1.0.0-1R</Version>
+    <StartupObject></StartupObject>
+    <ApplicationIcon>Resource\girp_ico.ico</ApplicationIcon>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PackAsTool>True</PackAsTool>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\girp_ico.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resource\girp_ico.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+</Project>
