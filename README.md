@@ -9,9 +9,10 @@ Get Ip Range Pro - поможет вам получить диапазоны ip-
 - Выбрать нужную вам версию программы x64 или x86
 - Портабельность (отсутствие внешних зависимостей для запуска программы)
 
-Сборка Self-contained
+
 
 Powered by 4it.me
+
 SVG ICON from - svgrepo.com
 
 ![](Prevy/GIRP-1.png)
