@@ -11,19 +11,33 @@
     <SignAssembly>False</SignAssembly>
     <Company>Maxim D.</Company>
     <Authors>Maxim D.</Authors>
-    <Version>1.0.0-1R</Version>
+    <Version>1.0.2</Version>
     <StartupObject></StartupObject>
-    <ApplicationIcon>Resource\girp_ico.ico</ApplicationIcon>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <PackAsTool>True</PackAsTool>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <PublishSingleFile Condition="'$(Configuration)' == 'Release'">true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+	<PublishTrimmed>false</PublishTrimmed>
+	<TrimMode>UserCopy</TrimMode>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	<_SuppressWpfTrimError>false</_SuppressWpfTrimError>
+	<NeutralLanguage>ru</NeutralLanguage>
+	<ApplicationIcon>Resource\girp_ico.ico</ApplicationIcon>
+	  
   </PropertyGroup>
 
+
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>none</DebugType>
+    <DebugType>embedded</DebugType>
+    <Prefer32Bit>False</Prefer32Bit>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>none</DebugType>
+    <DebugType>embedded</DebugType>
+    <Prefer32Bit>False</Prefer32Bit>
   </PropertyGroup>
 
   <ItemGroup>
@@ -31,15 +45,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    
+   <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Resource\girp_ico.png" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Properties\" />
-  </ItemGroup>
+
 
 </Project>

@@ -8,7 +8,7 @@
         
         Title="GIRP" Height="574" Width="467" ResizeMode="CanMinimize">
     <Grid>
-        <Label Content="GIPR" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.447,0.175" FontSize="22" Margin="0,10,0,0"/>
+        <Label Content="GIRP" HorizontalAlignment="Center" VerticalAlignment="Top" RenderTransformOrigin="0.447,0.175" FontSize="22" Margin="0,10,0,0"/>
         <Border BorderThickness="1" Margin="0,54,0,0" Height="130" VerticalAlignment="Top" HorizontalAlignment="Left" Width="467">
             <TextBox Name="TB_GOROD" Style="{StaticResource placeHolder}" Tag="Введите город" TextWrapping="Wrap" Margin="45,9,45,0" FontSize="20" PreviewTextInput="TB_GOROD_PreviewTextInput" Height="32" MaxLines="1" TextAlignment="Center" VerticalAlignment="Top" TextChanged="TB_GOROD_TextChanged" PreviewKeyDown="TB_GOROD_PreviewKeyDown"/>
         </Border>

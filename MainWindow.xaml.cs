@@ -1,40 +1,26 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.SymbolStore;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Printing;
-using System.Security.Authentication;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows;
-using System.Windows.Threading;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Newtonsoft.Json;
-using static System.Net.WebRequestMethods;
-using Newtonsoft.Json.Linq;
-using System.Net.Mime;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
-using System.IO;
+using System.Windows.Threading;
 
 namespace WpfAppIpRange
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    
+
 
     public partial class MainWindow : Window
     {
@@ -69,12 +55,13 @@ namespace WpfAppIpRange
         {
             switch (type)
             {
-                case 0: AddTextToOut("[Ошибка] " + Error, true);
+                case 0:
+                    AddTextToOut("[Ошибка] " + Error, true);
                     break;
             }
-            
-        } 
-        private async void AddTextToOut(string data , bool clear)
+
+        }
+        private async void AddTextToOut(string data, bool clear)
         {
             if (clear)
             {
@@ -180,22 +167,22 @@ namespace WpfAppIpRange
             return result.ToString();
         }
 
-    private async Task<JArray> GetRequest(string city)
+        private async Task<JArray> GetRequest(string city)
         {
             string responseBody = "null";
             try
             {
-                    uriBuilder.Host = "4it.me";
-                    uriBuilder.Path = "/api/getcitylist";
-                    uriBuilder.Port = -1;
-                    uriBuilder.Scheme = "https";
-                    var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-                    query["city"] = city;
-                    uriBuilder.Query = query.ToString();
-                    string url = uriBuilder.ToString();
-                    Log(url);
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("utf-8"));
+                uriBuilder.Host = "4it.me";
+                uriBuilder.Path = "/api/getcitylist";
+                uriBuilder.Port = -1;
+                uriBuilder.Scheme = "https";
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+                query["city"] = city;
+                uriBuilder.Query = query.ToString();
+                string url = uriBuilder.ToString();
+                Log(url);
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("utf-8"));
                 int i = 0;
                 int b = 0;
 
@@ -204,47 +191,47 @@ namespace WpfAppIpRange
                     var response = Task.Run(() => client.GetAsync(url));
                     // CONTENT CHECK CONTENT TYPE AND HEADER
                     bool resp;
-                        try
-                        {
-                           resp = response.Wait(TimeSpan.FromSeconds(0.5));
-                        }
-                        catch (Exception e)
-                        {
-                            HandlerExpection(0, e.Message);
-                            resp = false;
-                        }
-                    
-                    
-                        if (resp)
-                        {
-                            HttpResponseMessage response_r = response.Result;
-                            response_r.EnsureSuccessStatusCode();
-                            responseBody = Task.Run(() => response_r.Content.ReadAsStringAsync()).Result;
-                            Log(responseBody);
-                            i = 1;
-                        }
-                        else
-                        {
+                    try
+                    {
+                        resp = response.Wait(TimeSpan.FromSeconds(0.5));
+                    }
+                    catch (Exception e)
+                    {
+                        HandlerExpection(0, e.Message);
+                        resp = false;
+                    }
+
+
+                    if (resp)
+                    {
+                        HttpResponseMessage response_r = response.Result;
+                        response_r.EnsureSuccessStatusCode();
+                        responseBody = Task.Run(() => response_r.Content.ReadAsStringAsync()).Result;
+                        Log(responseBody);
+                        i = 1;
+                    }
+                    else
+                    {
                         if (b > 10)
                         {
                             break;
                         }
-                            i = 0;
+                        i = 0;
                         b = b + 1;
 
-                        }
                     }
-                    while (i == 0);
-                
-                    
-                
+                }
+                while (i == 0);
+
+
+
 
             }
-            catch(HttpRequestException e)
+            catch (HttpRequestException e)
             {
                 Log(e.Message);
                 return null;
-                
+
             }
             if (responseBody != "null")
             {
@@ -362,7 +349,7 @@ namespace WpfAppIpRange
             //Log(e.Text);
             if (Regex.IsMatch(e.Text, pattern, RegexOptions.IgnoreCase))
             {
-              //  Log("Ok");
+                //  Log("Ok");
             }
             else
             {
@@ -373,8 +360,8 @@ namespace WpfAppIpRange
 
         private async void BTN_SEARCH_Click(object sender, RoutedEventArgs e)
         {
-            
-            
+
+
             BTN_SEARCH.IsEnabled = false;
             JArray request = await Dispatcher.Invoke(() => GetRequest(TB_GOROD.Text));
 
@@ -409,6 +396,7 @@ namespace WpfAppIpRange
                         TB_GOROD.Text = (string)taskdata["name_ru"];
                         TB_OUT.Document.Blocks.Clear();
                         SetDataBord((string)taskdata["timezone"], request_ip.Count());
+                        GC.WaitForPendingFinalizers();
                         for (int i = 0; i < request_ip.Count(); i++)
                         {
                             var tex = new Run(await ToAddr((long)request_ip[i]["b"]) + "-" + await ToAddr((long)request_ip[i]["e"]));
@@ -419,6 +407,8 @@ namespace WpfAppIpRange
                         }
                         BTN_SEARCH.IsEnabled = true;
                         EnableButtons();
+                        GC.Collect();
+
                     }
 
 
@@ -428,6 +418,7 @@ namespace WpfAppIpRange
                 {
                     AddTextToOut("Не найдено...", true);
                     e.Handled = true;
+                    GC.Collect();
                 }
                 else
                 {
@@ -435,6 +426,7 @@ namespace WpfAppIpRange
                     SetDataBord((string)request[0]["timezone"], request_ip.Count());
                     Log(ConvertToLatin((string)request[0]["name_ru"]));
                     TB_OUT.Document.Blocks.Clear();
+                    GC.WaitForPendingFinalizers();
                     for (int i = 0; i < request_ip.Count(); i++)
                     {
                         var tex = new Run(await ToAddr((long)request_ip[i]["b"]) + "-" + await ToAddr((long)request_ip[i]["e"]));
@@ -455,9 +447,10 @@ namespace WpfAppIpRange
                     {
                         Log("id_net: " + (string)request[0]["id_net"] + "\nName: " + (string)request[0]["name_ru"]);
                     }
+                    GC.Collect();
                 }
             }
-            
+
 
 
         }
@@ -466,7 +459,7 @@ namespace WpfAppIpRange
         {
             JArray request;
             IsEnabled = false;
-            
+
             request = await Dispatcher.Invoke(() => GetRequest(null));
             if (request == null)
             {
@@ -479,6 +472,7 @@ namespace WpfAppIpRange
                 JArray request_ip = await Dispatcher.Invoke(() => GetIp((JObject)request[0]));
                 TB_OUT.Document.Blocks.Clear();
                 SetDataBord((string)request[0]["timezone"], request_ip.Count());
+                GC.WaitForPendingFinalizers();
                 for (int i = 0; i < request_ip.Count(); i++)
                 {
                     var tex = new Run(await ToAddr((long)request_ip[i]["b"]) + "-" + await ToAddr((long)request_ip[i]["e"]));
@@ -493,13 +487,15 @@ namespace WpfAppIpRange
                 EnableButtons();
             }
             IsEnabled = true;
-            
+            GC.Collect();
+
 
         }
 
         private async void BT_COPY_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(StringFromRichTextBox(TB_OUT));
+            GC.Collect();
         }
 
         private void TB_SAVE_Click(object sender, RoutedEventArgs e)
@@ -520,6 +516,7 @@ namespace WpfAppIpRange
                 var ip_list = StringFromRichTextBox(TB_OUT);
                 System.IO.File.WriteAllText(filename, ip_list);
             }
+            GC.Collect();
         }
 
         private void TB_GOROD_TextChanged(object sender, TextChangedEventArgs e)
@@ -537,11 +534,12 @@ namespace WpfAppIpRange
         private void BT_ABOUT_Click(object sender, RoutedEventArgs e)
         {
             new Window2().ShowDialog();
+            GC.Collect();
         }
 
         private void TB_GOROD_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
                 if (BTN_SEARCH.IsEnabled)
                 {
